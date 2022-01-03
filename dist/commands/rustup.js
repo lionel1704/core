@@ -78,7 +78,7 @@ class RustUp {
             default:
                 throw new Error(`Unknown platform ${process.platform}, can't install rustup`);
         }
-        core.addPath(path.join(process.env.HOME, '.cargo', 'bin'));
+        core.addPath(path.join(process.env.HOME || process.env.USERPROFILE, '.cargo', 'bin'));
         return new RustUp('rustup');
     }
     async installToolchain(name, options) {
