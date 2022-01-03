@@ -65,7 +65,12 @@ class RustUp {
             }
             case 'win32': {
                 const downloadPath = path.join(os.tmpdir(), "rustup-init.exe");
-                await fs_1.promises.rm(downloadPath, { force: true });
+                try {
+                    await fs_1.promises.unlink(downloadPath);
+                }
+                catch (e) {
+                    console.trace(`Unable to delete: ${downloadPath} Error: ${e}`);
+                }
                 const rustupExe = await tc.downloadTool('https://win.rustup.rs', downloadPath);
                 await exec.exec(rustupExe, args);
                 break;
